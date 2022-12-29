@@ -1,0 +1,7 @@
+- name: automated updates via ssh
+  uses: garygrossgarten/github-action-ssh@release
+  with:
+    command: sudo systemctl restart gitpull
+    host: ${{ secrets.EC2_SERVER_HOST }}
+    username: ${{ secrets.EC2_USER }}
+    privateKey: ${{ secrets.EC2_CERT}}
