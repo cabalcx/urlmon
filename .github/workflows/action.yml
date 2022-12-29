@@ -7,10 +7,31 @@ jobs:
   build:
     runs-on: ubuntu-latest
     steps:
-      - name: automated updates via ssh
+      - name: update the git repo
         uses: garygrossgarten/github-action-ssh@release
         with:
           command: sudo systemctl restart gitpull
+          host: ${{ secrets.EC2_SERVER_HOST }}
+          username: ${{ secrets.EC2_USER }}
+          privateKey: ${{ secrets.EC2_CERT}}
+      - name: update the systemd services
+        uses: garygrossgarten/github-action-ssh@release
+        with:
+          command: sudo systemctl restart updateservices
+          host: ${{ secrets.EC2_SERVER_HOST }}
+          username: ${{ secrets.EC2_USER }}
+          privateKey: ${{ secrets.EC2_CERT}}
+      - name: ensure all dependencies are up to date
+        uses: garygrossgarten/github-action-ssh@release
+        with:
+          command: sudo systemctl restart pipinstall
+          host: ${{ secrets.EC2_SERVER_HOST }}
+          username: ${{ secrets.EC2_USER }}
+          privateKey: ${{ secrets.EC2_CERT}}
+      - name: restart the job board bot
+        uses: garygrossgarten/github-action-ssh@release
+        with:
+          command: sudo systemctl restart jobbot
           host: ${{ secrets.EC2_SERVER_HOST }}
           username: ${{ secrets.EC2_USER }}
           privateKey: ${{ secrets.EC2_CERT}}
