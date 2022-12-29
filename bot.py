@@ -35,11 +35,11 @@ del df
 # FUNCTIONS
 ########################################################################
 
-def string_to_hash(string: str) -> str:
+def string_to_hash(any) -> str:
     """
     Function to hash a string
     """
-    return hashlib.sha256(string.encode('utf-8')).hexdigest()
+    return hashlib.sha256(str(any).encode('utf-8')).hexdigest()
 
 def validator(message: discord.Message) -> bool:
     """
