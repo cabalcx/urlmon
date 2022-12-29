@@ -1,0 +1,10 @@
+[Unit]
+Description=git pull for bot job board bot
+
+[Service]
+User=ubuntu
+ExecStart=git pull
+WorkingDirectory=/home/ubuntu/job-board
+
+[Install]
+WantedBy=multi-user.target

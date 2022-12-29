@@ -1,0 +1,12 @@
+# configuration artifacts
+config.json
+config-*.json
+
+# python virtualenv artifacts
+bin
+lib
+include
+pyvenv.cfg
+
+# ide artifacts
+.vscode
