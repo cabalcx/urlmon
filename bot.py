@@ -9,6 +9,7 @@ import os
 import re
 import pandas as pd
 import hashlib
+import requests
 
 ########################################################################
 # CONFIG SETUP
@@ -17,6 +18,8 @@ CONFIGFILE = sys.argv[1]
 CONFIG = json.load(open(CONFIGFILE))
 
 DISCORD_BOT_TOKEN = CONFIG['discord_bot_token']
+SINK_URL = CONFIG['sink_url']
+SINK_AUTHORIZATION = CONFIG['sink_authorization']
 
 ########################################################################
 # VALIDATOR SETUP
@@ -84,7 +87,14 @@ def sinkData(data: dict = {}):
     Function to sink data to a location
     """
     record = createRecord(data)
-    print(record)
+
+    headers = {
+        'apikey': SINK_AUTHORIZATION
+    }
+    
+    response = requests.post(SINK_URL, headers=headers, juson=data)
+
+    return response
 
 def parse_event_message(message: discord.Message) -> dict:
     """
@@ -455,8 +465,11 @@ async def on_message(message):
         parsed_message_event = parse_event_message(message)
         urls = extract_urls_from_content(parsed_message_event['content'])
         content_sha256 = string_to_hash(parsed_message_event['content'])
-        author_sha256 = string_to_hash(parsed_message_event['author']['name'])
-        sinkData({'urls':urls,'content_hash':content_sha256})
+        guild_id_sha256 = string_to_hash(parsed_message_event['guild']['id'])
+        channel_id_sha256 = string_to_hash(parsed_message_event['channel']['id'])
+        author_id_sha256 = string_to_hash(parsed_message_event['author']['id'])
+        for url in urls:
+            sinkData({'url':url,'guild':guild_id_sha256,'channel': channel_id_sha256, 'author': author_id_sha256, 'content':content_sha256})
 
 
 ########################################################################
