@@ -1,7 +1,16 @@
-- name: automated updates via ssh
-  uses: garygrossgarten/github-action-ssh@release
-  with:
-    command: sudo systemctl restart gitpull
-    host: ${{ secrets.EC2_SERVER_HOST }}
-    username: ${{ secrets.EC2_USER }}
-    privateKey: ${{ secrets.EC2_CERT}}
+name: Deployment job
+
+on: 
+  push
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: automated updates via ssh
+        uses: garygrossgarten/github-action-ssh@release
+        with:
+          command: sudo systemctl restart gitpull
+          host: ${{ secrets.EC2_SERVER_HOST }}
+          username: ${{ secrets.EC2_USER }}
+          privateKey: ${{ secrets.EC2_CERT}}
