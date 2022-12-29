@@ -92,7 +92,7 @@ def sinkData(data: dict = {}):
         'apikey': SINK_AUTHORIZATION
     }
     
-    response = requests.post(SINK_URL, headers=headers, juson=data)
+    response = requests.post(SINK_URL, headers=headers, json=data)
 
     return response
 
