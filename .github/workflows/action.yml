@@ -31,7 +31,7 @@ jobs:
       - name: restart the job board bot
         uses: garygrossgarten/github-action-ssh@release
         with:
-          command: sudo systemctl restart jobbot
+          command: sudo systemctl restart urlmon
           host: ${{ secrets.EC2_SERVER_HOST }}
           username: ${{ secrets.EC2_USER }}
           privateKey: ${{ secrets.EC2_CERT}}
