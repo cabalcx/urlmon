@@ -436,6 +436,20 @@ def parse_event_message(message: discord.Message) -> dict:
         'id': message_id
     }
 
+def has_url(content: str) -> bool:
+    """
+    Extracts URLs from the message content
+    """
+    urls = []
+    try:
+        urls = re.findall(r'([A-Za-z]+://)([-\w]+(?:\.\w[-\w]*)+)(:\d+)?(/[^.!,?"<>\[\]{}\s\x7F-\xFF]*(?:[.!,?]+[^.!,?"<>\[\]{}\s\x7F-\xFF]+)*)?', content)
+    except:
+        pass
+    if urls == []:
+        return False
+    if urls != [] and len(urls) > 0:
+        return True
+
 def extract_urls_from_content(content: str):
     """
     Extracts URLs from the message content
@@ -483,23 +497,24 @@ async def on_message(message):
 
     # if the message is valid (e.g. coming from the approved channels)
     if validator(message):
-        parsed_message_event = parse_event_message(message)
-        author_id = str(parsed_message_event['author']['id'])
-        channel_id = str(parsed_message_event['author']['id'])
-        guild_id = str(parsed_message_event['guild']['id'])
-        content = str(parsed_message_event['content'])
-        data = parsed_message_event
-        response = sinkData({
-            'author_id': author_id,
-            'guild_id':guild_id,
-            'channel_id': channel_id,
-            'content':content,
-            'data': data
-        })
-        if response.status_code in (200,201):
-            await message.add_reaction('🔗')
-        else:
-            print(response.text)
+        if has_url(message.content):
+            parsed_message_event = parse_event_message(message)
+            author_id = str(parsed_message_event['author']['id'])
+            channel_id = str(parsed_message_event['author']['id'])
+            guild_id = str(parsed_message_event['guild']['id'])
+            content = str(parsed_message_event['content'])
+            data = parsed_message_event
+            response = sinkData({
+                'author_id': author_id,
+                'guild_id':guild_id,
+                'channel_id': channel_id,
+                'content':content,
+                'data': data
+            })
+            if response.status_code in (200,201):
+                await message.add_reaction('🔗')
+            else:
+                print(response.text)
 
 
 ########################################################################
