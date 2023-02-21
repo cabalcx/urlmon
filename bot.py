@@ -25,11 +25,13 @@ SINK_AUTHORIZATION = CONFIG['sink_authorization']
 # VALIDATOR SETUP
 ########################################################################
 df = pd.read_csv('discord-channels.csv')
-APPROVED_CHANNELS = df.to_dict('records')
-APPROVED_CHANNEL_COMBOS = {}
+APPROVED_CHANNELS = df.to_dict(orient='records')
+APPROVED_CHANNEL_COMBOS = []
 for entry in APPROVED_CHANNELS:
-    APPROVED_CHANNEL_COMBOS.update({entry['guild.name']:str(entry['guild.id'])+':'+str(entry['channel.id'])}) 
+    APPROVED_CHANNEL_COMBOS.append(str(entry['guild.id'])+':'+str(entry['channel.id'])+':'+str(entry['category_id'])) 
 del df
+
+print(APPROVED_CHANNEL_COMBOS)
 
 ########################################################################
 # FUNCTIONS
@@ -43,10 +45,12 @@ def string_to_hash(any) -> str:
 
 def validator(message: discord.Message) -> bool:
     """
-    Function to validate the guild:channel combos for incoming message
+    Function to validate the guild:channel:category combos for incoming message
     """
-    observed_combo = string_to_hash(str(message.guild.id))+':'+string_to_hash(str(message.channel.id))
-    if observed_combo in APPROVED_CHANNEL_COMBOS.values():
+    observed_combo_on_channel = string_to_hash(str(message.guild.id))+':'+string_to_hash(str(message.channel.id))+':'+str('nan')
+    observed_combo_on_guild = string_to_hash(str(message.guild.id))+':'+str('nan')+':'+string_to_hash(str(message.channel.category_id))
+
+    if observed_combo_on_channel in APPROVED_CHANNEL_COMBOS or observed_combo_on_guild in APPROVED_CHANNEL_COMBOS:
         return True
     else:
         return False
@@ -89,7 +93,8 @@ def sinkData(data: dict = {}):
     record = createRecord(data)
 
     headers = {
-        'apikey': SINK_AUTHORIZATION
+        'apikey': SINK_AUTHORIZATION,
+        'authorization': f'Bearer {SINK_AUTHORIZATION}'
     }
     
     response = requests.post(SINK_URL, headers=headers, json=data)
@@ -458,9 +463,14 @@ client = discord.Client(intents=intents)
 ########################################################################
 @client.event
 async def on_message(message):
+    
     """
     Handles the on_message event
     """
+
+    '''
+    # This is the original code, with maximum privacy features.
+    # Since this is going to remain cabal only for now, so we can kick some of this.
     if validator(message):
         parsed_message_event = parse_event_message(message)
         urls = extract_urls_from_content(parsed_message_event['content'])
@@ -470,7 +480,29 @@ async def on_message(message):
         author_id_sha256 = string_to_hash(parsed_message_event['author']['id'])
         for url in urls:
             sinkData({'url':url,'guild':guild_id_sha256,'channel': channel_id_sha256, 'author': author_id_sha256, 'content':content_sha256})
-    await message.add_reaction('cabal_8bit')
+        await message.add_reaction('🔗')
+    '''
+
+    # if the message is valid (e.g. coming from the approved channels)
+    if validator(message):
+        parsed_message_event = parse_event_message(message)
+        author_id = str(parsed_message_event['author']['id'])
+        channel_id = str(parsed_message_event['author']['id'])
+        guild_id = str(parsed_message_event['guild']['id'])
+        content = str(parsed_message_event['content'])
+        data = parsed_message_event
+        response = sinkData({
+            'author_id': author_id,
+            'guild_id':guild_id,
+            'channel_id': channel_id,
+            'content':content,
+            'data': data
+        })
+        if response.status_code in (200,201):
+            await message.add_reaction('🔗')
+        else:
+            print(response.text)
+
 
 ########################################################################
 # MAIN RUN
