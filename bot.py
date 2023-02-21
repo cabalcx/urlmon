@@ -28,7 +28,7 @@ df = pd.read_csv('discord-channels.csv')
 APPROVED_CHANNELS = df.to_dict(orient='records')
 APPROVED_CHANNEL_COMBOS = []
 for entry in APPROVED_CHANNELS:
-    APPROVED_CHANNEL_COMBOS.append(str(entry['guild.id'])+':'+str(entry['channel.id'])+':'+str(entry['category_id'])) 
+    APPROVED_CHANNEL_COMBOS.append(str(entry['guild_id'])+':'+str(entry['channel_id'])+':'+str(entry['category_id'])) 
 del df
 
 print(APPROVED_CHANNEL_COMBOS)
