@@ -4,7 +4,7 @@ Description=git pull for bot job board bot
 [Service]
 User=ubuntu
 ExecStart=git pull
-WorkingDirectory=/home/ubuntu/job-board
+WorkingDirectory=/home/ubuntu/urlmon
 
 [Install]
 WantedBy=multi-user.target

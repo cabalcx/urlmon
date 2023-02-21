@@ -4,7 +4,7 @@ Description=pip updater for job board
 [Service]
 User=ubuntu
 ExecStart=python3 -m pip install -r requirements.txt
-WorkingDirectory=/home/ubuntu/job-board
+WorkingDirectory=/home/ubuntu/urlmon
 
 [Install]
 WantedBy=multi-user.target

@@ -5,7 +5,7 @@ Description=service updater for bot job board bot
 User=root
 ExecStart=sudo cp -r . /etc/systemd/system/
 ExecStartPost=systemctl daemon-reload
-WorkingDirectory=/home/ubuntu/job-board/services
+WorkingDirectory=/home/ubuntu/urlmon/services
 
 [Install]
 WantedBy=multi-user.target
