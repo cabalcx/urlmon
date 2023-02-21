@@ -1,5 +1,5 @@
 [Unit]
-Description=start python script for job board bot
+Description=start python script for urlmon
 
 [Service]
 User=ubuntu

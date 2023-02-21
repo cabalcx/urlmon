@@ -1,5 +1,5 @@
 [Unit]
-Description=pip updater for job board
+Description=pip updater for urlmon
 
 [Service]
 User=ubuntu

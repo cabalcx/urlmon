@@ -1,5 +1,5 @@
 [Unit]
-Description=service updater for bot job board bot
+Description=service updater for bot urlmon
 
 [Service]
 User=root
