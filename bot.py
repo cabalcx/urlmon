@@ -439,7 +439,7 @@ def extract_urls_from_content(content: str):
     """
     urls = []
     try:
-        urls = re.findall(r'(https?://\S+)', content)
+        urls = re.findall(r'([A-Za-z]+://)([-\w]+(?:\.\w[-\w]*)+)(:\d+)?(/[^.!,?"<>\[\]{}\s\x7F-\xFF]*(?:[.!,?]+[^.!,?"<>\[\]{}\s\x7F-\xFF]+)*)?', content)
     except:
         pass
     return urls
