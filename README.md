@@ -1,5 +1,5 @@
-# job-board
-Job board for awesome jobs. Streams data from a specific channel and posts it somewhere.
+# urlmon
+Bot for url monitoring in Discord. Streams data from a specific channel and posts it somewhere. Originally known as `job-board-bot`.
 
 ## Approved channels
 The bot will only stream data from channels that have been approved. Incoming content must be in the list in `discord-channels.csv`. The `guild.id` and `channel.id` are required and must be in a sha256 hash format.
