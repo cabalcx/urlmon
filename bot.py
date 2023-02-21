@@ -470,7 +470,7 @@ async def on_message(message):
         author_id_sha256 = string_to_hash(parsed_message_event['author']['id'])
         for url in urls:
             sinkData({'url':url,'guild':guild_id_sha256,'channel': channel_id_sha256, 'author': author_id_sha256, 'content':content_sha256})
-
+    message.reaction.emoji('cabal_8bit')
 
 ########################################################################
 # MAIN RUN
