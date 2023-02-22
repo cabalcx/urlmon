@@ -500,7 +500,7 @@ async def on_message(message):
         if has_url(message.content):
             parsed_message_event = parse_event_message(message)
             author_id = str(parsed_message_event['author']['id'])
-            channel_id = str(parsed_message_event['author']['id'])
+            channel_id = str(parsed_message_event['channel']['id'])
             guild_id = str(parsed_message_event['guild']['id'])
             content = str(parsed_message_event['content'])
             data = parsed_message_event
