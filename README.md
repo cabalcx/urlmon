@@ -33,6 +33,9 @@ This page has more info on how to add the bot to the server: [https://discordpy.
 Adding the bot to your server will depend on authorizing it via the Discord OAuth2 url generated here:
 `https://discord.com/api/oauth2/authorize?client_id=928752486817341460&response_type=code&scope=messages.read`
 
+## Adding new channels
+
+To add new channels, edit [`discord-channels.csv`](./discord-channel.csv) with the sha256 of the `guild.id` and the `channel.id` you want ingested (assuming the bot has already been added to the Discord).
 
 ## Deploying
 
