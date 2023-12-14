@@ -4,7 +4,7 @@ Description=git pull for bot urlmon
 [Service]
 User=ubuntu
 ExecStart=git pull
-WorkingDirectory=/home/ubuntu/urlmon
+WorkingDirectory=/root/urlmon
 
 [Install]
 WantedBy=multi-user.target

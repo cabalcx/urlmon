@@ -4,7 +4,7 @@ Description=pip updater for urlmon
 [Service]
 User=ubuntu
 ExecStart=python3 -m pip install -r requirements.txt
-WorkingDirectory=/home/ubuntu/urlmon
+WorkingDirectory=/root/urlmon
 
 [Install]
 WantedBy=multi-user.target

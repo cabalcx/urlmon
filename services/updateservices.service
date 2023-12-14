@@ -5,7 +5,7 @@ Description=service updater for bot urlmon
 User=root
 ExecStart=sudo cp -r . /etc/systemd/system/
 ExecStartPost=systemctl daemon-reload
-WorkingDirectory=/home/ubuntu/urlmon/services
+WorkingDirectory=/root/urlmon/services
 
 [Install]
 WantedBy=multi-user.target
