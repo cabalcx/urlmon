@@ -3,6 +3,7 @@ Description=pip updater for urlmon
 
 [Service]
 User=ubuntu
+ExecPreStart=source bin/activate
 ExecStart=python3 -m pip install -r requirements.txt
 WorkingDirectory=/root/urlmon
 
