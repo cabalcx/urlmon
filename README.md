@@ -7,7 +7,7 @@ The bot will only stream data from channels that have been approved. Incoming co
 ## Python dev setup
 Set up a virtual environment by running
 ```
-python3 -m virtualenv .
+/root/urlmon/bin/python3 -m virtualenv .
 ```
 This will initalize a virtual environment in this directory.
 
@@ -42,6 +42,6 @@ To add new channels, edit [`discord-channels.csv`](./discord-channel.csv) with t
 Set up the dependencies:
 ```
 sudo apt update -y && sudo apt-upgrade -y;
-sudo apt install python3-pip
-python3 -m pip install -r requirements.txt
+sudo apt install /root/urlmon/bin/python3-pip
+/root/urlmon/bin/python3 -m pip install -r requirements.txt
 ```
