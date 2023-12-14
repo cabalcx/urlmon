@@ -2,7 +2,7 @@
 Description=start python script for urlmon
 
 [Service]
-User=ubuntu
+User=root
 ExecPreStart=source bin/activate
 ExecStart=python3 bot.py config-urlmon.json
 WorkingDirectory=/root/urlmon

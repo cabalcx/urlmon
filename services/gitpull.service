@@ -2,7 +2,7 @@
 Description=git pull for bot urlmon
 
 [Service]
-User=ubuntu
+User=root
 ExecStart=git pull
 WorkingDirectory=/root/urlmon
 
