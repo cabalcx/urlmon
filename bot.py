@@ -7,7 +7,6 @@ import json
 import discord
 import os
 import re
-import pandas as pd
 import hashlib
 import requests
 
