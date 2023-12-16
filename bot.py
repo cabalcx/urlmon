@@ -20,6 +20,7 @@ CONFIG = json.load(open(CONFIGFILE))
 DISCORD_BOT_TOKEN = CONFIG['discord_bot_token']
 SINK_URL = CONFIG['sink_url']
 SINK_AUTHORIZATION = CONFIG['sink_authorization']
+CERTIFICATE_PATH = CONFIG['certificate_path'] if CONFIG['certificate_path'] != '' else False
 
 ########################################################################
 # VALIDATOR SETUP
@@ -91,12 +92,10 @@ def sinkData(data: dict = {}):
     record = createRecord(data)
 
     headers = {
-        'apikey': SINK_AUTHORIZATION,
-        'authorization': f'Bearer {SINK_AUTHORIZATION}'
+        'authorization': SINK_AUTHORIZATION
     }
     
-    response = requests.post(SINK_URL, headers=headers, json=data)
-
+    response = requests.post(SINK_URL, headers=headers, json=data, verify=CERTIFICATE_PATH)
     return response
 
 def parse_event_message(message: discord.Message) -> dict:

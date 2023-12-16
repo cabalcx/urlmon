@@ -10,3 +10,5 @@ pyvenv.cfg
 
 # ide artifacts
 .vscode
+
+certs
