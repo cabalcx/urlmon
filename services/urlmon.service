@@ -3,7 +3,7 @@ Description=start python script for urlmon
 
 [Service]
 User=root
-ExecStart=/root/urlmon/bin/python3 bot.py config-urlmon.json
+ExecStart=python3 bot.py config-urlmon.json
 WorkingDirectory=/root/urlmon
 
 [Install]
